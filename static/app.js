@@ -61,6 +61,7 @@ function makePlots(id) {
             text: labels,
             x: ids,
             y: samValues,
+            mode: "markers",
             marker: {
                 color: ids,
                 size: samValues
@@ -74,5 +75,22 @@ function makePlots(id) {
     });
 }
 function demInfo(id) {
+    d3.json("./samples.json").then((data) => {
+        //grab metadata
+        var metadata = data.metadata;
+        console.log(metadata);
 
+        //filter by chosen id
+        var results = metadata.filter(data => data.id.toString() === id)[0];
+
+        //Select demographic table and clear it
+        var demdata = d3.select("#sample-metadata");
+        demdata.html("");
+
+        //go through and grab data
+        Object.entries(results).forEach(([key, value]) => {
+            demdata.append("h5").text(`${key}: ${value}`)
+        });
+
+    });
 }
