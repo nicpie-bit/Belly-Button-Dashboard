@@ -19,14 +19,14 @@ function init() {
         });
         //Call data and info functions to display on page
         makePlots(data.names[0]);
-        getInfo(data.names[0]);
+        demInfo(data.names[0]);
     });
 }
 init();
 
 function makePlots(id) {
     //read json data
-    d3.json("./sample.json").then((data) => {
+    d3.json("./samples.json").then((data) => {
         console.log(data)
 
         //Get data for values, labels, and hovertext
@@ -68,4 +68,7 @@ function makePlots(id) {
             xlable: "OTU ID"
         };
     });
+}
+function demInfo(id) {
+
 }
