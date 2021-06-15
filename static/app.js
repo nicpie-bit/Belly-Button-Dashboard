@@ -30,9 +30,12 @@ function makePlots(id) {
         console.log(data)
 
         //Get data for values, labels, and hovertext
-        var sampleValues = data.sample_values.slice(0,10).reverse();
-        var otuId = data.otu_ids.map(d => "OTU " + d).slice(0,10).reverse();
-        var otuLabels = data.otu_labels.reverse();
+        var sample = data.samples.filter(s => s.id.toString() === id)[0];
+        console.log(sample);
+
+        var sampleValues = sample.sample_values.slice(0,10).reverse();
+        var otuId = sample.otu_ids.map(d => "OTU " + d).slice(0,10).reverse();
+        var otuLabels = sample.otu_labels.reverse();
 
         //Create trace1
         var trace1 = {
@@ -43,15 +46,15 @@ function makePlots(id) {
             orientation: "h"
         };
         //Fix layout
-        var layout = {
+        var layout1 = {
             title: "Top 10 Bacteria Cultures Found"
         };
-        Plotly.newPlot("bar", trace1, layout);
+        Plotly.newPlot("bar", trace1, layout1);
 
         //Get values for bubble chart
-        var ids = data.otu_labels;
-        var samValues = data.sample_values;
-        var labels = data.otu_labels;
+        var ids = sample.otu_labels;
+        var samValues = sample.sample_values;
+        var labels = sample.otu_labels;
 
         //Create trace2
         var trace2 = {
@@ -63,10 +66,11 @@ function makePlots(id) {
                 size: samValues
             }
         };
-        var layout = {
+        var layout2 = {
             title: "Bacteria Cultures Per Sample",
             xlable: "OTU ID"
         };
+        Plotly.newPlot("bubble", trace2, layout2)
     });
 }
 function demInfo(id) {
