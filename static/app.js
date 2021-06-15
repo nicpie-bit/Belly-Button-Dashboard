@@ -23,3 +23,29 @@ function init() {
     });
 }
 init();
+
+function BarPlot(id) {
+    //read json data
+    d3.json("./sample.json").then((data) => {
+        console.log(data)
+
+        //Get data for values, labels, and hovertext
+        var sampleValues = data.samples_values.slice(0,10).reverse();
+        var otuId = data.otu_ids.slice(0,10).reverse();
+        var otuLabels = data.otu_labels.reverse();
+
+        //Create trace
+        var trace1 = {
+            text: otuLabels,
+            type: "bar",
+            x: sampleValues,
+            y: otuId,
+            orientation: "h"
+        }
+    });
+    //Fix layout
+    var layout = {
+        title: "Top 10 Bacteria Cultures Found"
+    }
+    Plotly.newPlot("bar", trace1, layout);
+}
