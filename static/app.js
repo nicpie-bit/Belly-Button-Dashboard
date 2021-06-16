@@ -68,7 +68,7 @@ function makePlots(data) {
         Plotly.newPlot("bubble", trace2, layout2);
 
         //Get freq value
-        var wfreq = data.metadata.map(d => d.wfreq);
+        var wfreq = data.metadata;
 
         var trace3 = [{
             domain: {
