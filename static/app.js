@@ -16,9 +16,9 @@ function init() {
         var sample = data.samples[0];
         makePlots(sample);
         var metadata = data.metadata[0];
-        demInfo(metadata)
+        demInfo(metadata)     
     });
-}
+};
 init();
 
 function makePlots(data) {
@@ -67,9 +67,9 @@ function makePlots(data) {
         }];
         Plotly.newPlot("bubble", trace2, layout2);
 
-        //Get freq value
-        var wfreq = data.metadata;
-
+        // Get freq value
+        // var wfreq = data.metadata.wfreq;
+        //var wfreq = metadata.wfreq;
         var trace3 = [{
             domain: {
                 x: [0,1], 
@@ -86,7 +86,7 @@ function makePlots(data) {
             margin: {t:0, b:0}
         }];
         Plotly.newPlot("gauge", trace3, layout3);
-}
+};
 function demInfo(id) {
         //Select demographic table and clear it
         var demdata = d3.select("#sample-metadata");
@@ -96,12 +96,53 @@ function demInfo(id) {
         Object.entries(id).forEach(([key, value]) => {
             demdata.append("h5").text(`${key}: ${value}`)
         });
-}
+};
+function buildGauge(wfreq) {
+    var level = parseFloat(wfreq) * 20
+
+    var data = [
+        {
+            domain: xxxx,
+            value: wfreq,
+            title: xxx,
+            type: "indicator",
+            mode: "gauge",
+            gauge: {
+                axis: xxx,
+                bar: xxx,
+                steps:
+                [
+                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
+                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
+                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
+                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
+                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
+                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
+                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
+                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
+                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
+                ],
+                threshold: {
+                    line: {color: "purple", width = 7},
+                    thickness: .75,
+                    value: wfreq
+                }
+            }
+    }
+    ]
+    var layout = {}
+    var GAUGE = document.getElementById("gauge")
+    Plotly.newPlot(GAUGE, data, layout)
+};
 function optionChanged(id) {
     d3.json("./samples.json").then(function(data) {
         var filterid = data.samples.filter(d => d.id.toString() === id);
         makePlots(filterid[0]);
         var results = data.metadata.filter(d => d.id.toString() === id);
+        // var result_xx = results[0]
+        // wash_freq = result_xx.wfreq
+        // console.log(wash_freq)
         demInfo(results[0]);
+        // buildGauge(wash_freq)
     });
 }
