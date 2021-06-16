@@ -31,42 +31,41 @@ function makePlots(data) {
         var otuLabels = data.otu_labels.reverse();
 
         //Create trace1
-        var trace1 = {
+        var trace1 = [{
             text: otuLabels,
             type: "bar",
             x: sampleValues,
             y: otuId,
             orientation: "h"
-        };
+        }];
         //Fix layout
-        var layout1 = {
+        var layout1 = [{
             title: "Top 10 Bacteria Cultures Found"
-        };
+        }];
         Plotly.newPlot("bar", trace1, layout1);
 
         //Get values for bubble chart
-        var ids = data.otu_labels;
+        var ids = data.otu_ids;
         var samValues = data.sample_values;
         var labels = data.otu_labels;
 
         //Create trace2
-        //var trace2 = {
-            //text: labels,
-            //x: ids,
-            //y: samValues,
-            //mode: "markers",
-            //marker: {
-                //color: ids,
-                //size: samValues
-            //}
-        //};
-        //var layout2 = {
-            //title: "Bacteria Cultures Per Sample",
-            //xaxis: {title: "OTU ID"},
-            //height: 600,
-            //width: 1000
-        //};
-        //Plotly.newPlot("bubble", trace2, layout2)
+        var trace2 = [{
+            text: labels,
+            x: ids,
+            y: samValues,
+            mode: "markers",
+            marker: {
+                color: ids,
+                size: samValues
+            }
+        }];
+        var layout2 = [{
+            title: "Bacteria Cultures Per Sample",
+            xaxis: "OTU ID",
+            width: 1200
+        }];
+        Plotly.newPlot("bubble", trace2, layout2)
 }
 function demInfo(id) {
         //Select demographic table and clear it
