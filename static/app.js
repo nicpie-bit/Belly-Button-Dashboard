@@ -14,9 +14,10 @@ function init() {
         });
         //Call data and info functions to display on page
         var sample = data.samples[0];
-        makePlots(sample);
         var metadata = data.metadata[0];
-        demInfo(metadata)     
+        demInfo(metadata);
+        makePlots(sample); 
+        buildGauge(metadata);
     });
 };
 init();
@@ -70,22 +71,22 @@ function makePlots(data) {
         // Get freq value
         // var wfreq = data.metadata.wfreq;
         //var wfreq = metadata.wfreq;
-        var trace3 = [{
-            domain: {
-                x: [0,1], 
-                y: [0,1]
-            },
-            value: wfreq,
-            title: { text: "Scrubs per Week"},
-            type: "indicator",
-            mode: "gauge+number"
-        }];
-        var layout3 = [{
-            width: 600,
-            height: 450,
-            margin: {t:0, b:0}
-        }];
-        Plotly.newPlot("gauge", trace3, layout3);
+        //var trace3 = [{
+            //domain: {
+                //x: [0,1], 
+                //y: [0,1]
+            //},
+            //value: wfreq,
+            //title: { text: "Scrubs per Week"},
+            //type: "indicator",
+            //mode: "gauge+number"
+        //}];
+        //var layout3 = [{
+            //width: 600,
+            //height: 450,
+            //margin: {t:0, b:0}
+        //}];
+        //Plotly.newPlot("gauge", trace3, layout3);
 };
 function demInfo(id) {
         //Select demographic table and clear it
@@ -102,28 +103,31 @@ function buildGauge(wfreq) {
 
     var data = [
         {
-            domain: xxxx,
+            domain: {
+                x: [0,1],
+                y: [0,1]
+            },
             value: wfreq,
-            title: xxx,
+            title: { text: "Scrubs per Week"},
             type: "indicator",
             mode: "gauge",
             gauge: {
-                axis: xxx,
-                bar: xxx,
+                axis: [0, 9],
+                bar: {color: "red"},
                 steps:
                 [
-                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
-                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
-                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
-                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
-                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
-                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
-                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
-                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
-                    {range: [0,1], color: "rgba(100, 100, 100, 100)" },
+                    {range: [0,1], color: "rgba(0, 100, 100, 100)" },
+                    {range: [1,2], color: "rgba(100, 100, 100, 100)" },
+                    {range: [2,3], color: "rgba(100, 100, 100, 100)" },
+                    {range: [3,4], color: "rgba(100, 100, 100, 100)" },
+                    {range: [4,5], color: "rgba(100, 100, 100, 100)" },
+                    {range: [5,6], color: "rgba(100, 100, 100, 100)" },
+                    {range: [6,7], color: "rgba(100, 100, 100, 100)" },
+                    {range: [7,8], color: "rgba(100, 100, 100, 100)" },
+                    {range: [8,9], color: "rgba(100, 100, 100, 100)" },
                 ],
                 threshold: {
-                    line: {color: "purple", width = 7},
+                    //line: {color: "purple", width = 7},
                     thickness: .75,
                     value: wfreq
                 }
@@ -131,18 +135,14 @@ function buildGauge(wfreq) {
     }
     ]
     var layout = {}
-    var GAUGE = document.getElementById("gauge")
-    Plotly.newPlot(GAUGE, data, layout)
+    Plotly.newPlot("gauge", data, layout)
 };
 function optionChanged(id) {
     d3.json("./samples.json").then(function(data) {
         var filterid = data.samples.filter(d => d.id.toString() === id);
         makePlots(filterid[0]);
         var results = data.metadata.filter(d => d.id.toString() === id);
-        // var result_xx = results[0]
-        // wash_freq = result_xx.wfreq
-        // console.log(wash_freq)
         demInfo(results[0]);
-        // buildGauge(wash_freq)
+        buildGauge(results[0]);
     });
 }
