@@ -17,7 +17,9 @@ function init() {
         var metadata = data.metadata[0];
         demInfo(metadata);
         makePlots(sample); 
-        buildGauge(metadata);
+        var wfreq = metadata.wfreq;
+        buildGauge(wfreq);
+        console.log(metadata)
     });
 };
 init();
@@ -118,9 +120,7 @@ function buildGauge(wfreq) {
             }
     }
     ]
-    var layout = {
-        
-    }
+    var layout = {}
     Plotly.newPlot("gauge", data, layout)
 };
 function optionChanged(id) {
@@ -129,6 +129,6 @@ function optionChanged(id) {
         makePlots(filterid[0]);
         var results = data.metadata.filter(d => d.id.toString() === id);
         demInfo(results[0]);
-        buildGauge(results[0]);
+        buildGauge(results[0].wfreq)
     });
 }
