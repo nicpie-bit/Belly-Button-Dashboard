@@ -67,26 +67,6 @@ function makePlots(data) {
             width: 1200
         }];
         Plotly.newPlot("bubble", trace2, layout2);
-
-        // Get freq value
-        // var wfreq = data.metadata.wfreq;
-        //var wfreq = metadata.wfreq;
-        //var trace3 = [{
-            //domain: {
-                //x: [0,1], 
-                //y: [0,1]
-            //},
-            //value: wfreq,
-            //title: { text: "Scrubs per Week"},
-            //type: "indicator",
-            //mode: "gauge+number"
-        //}];
-        //var layout3 = [{
-            //width: 600,
-            //height: 450,
-            //margin: {t:0, b:0}
-        //}];
-        //Plotly.newPlot("gauge", trace3, layout3);
 };
 function demInfo(id) {
         //Select demographic table and clear it
@@ -100,7 +80,7 @@ function demInfo(id) {
 };
 function buildGauge(wfreq) {
     var level = parseFloat(wfreq) * 20
-
+    console.log(level)
     var data = [
         {
             domain: {
@@ -108,33 +88,39 @@ function buildGauge(wfreq) {
                 y: [0,1]
             },
             value: wfreq,
-            title: { text: "Scrubs per Week"},
+            title: { text: "Belly Button Washing Frequency"},
             type: "indicator",
             mode: "gauge",
             gauge: {
-                axis: [0, 9],
-                bar: {color: "red"},
+                axis: {
+                    range: [0, 9],
+                    tickwidth: 1,
+                    tickcolor: "black"
+                },
+                bar: {color: "dark purple"},
                 steps:
                 [
-                    {range: [0,1], color: "rgba(0, 100, 100, 100)" },
-                    {range: [1,2], color: "rgba(100, 100, 100, 100)" },
-                    {range: [2,3], color: "rgba(100, 100, 100, 100)" },
-                    {range: [3,4], color: "rgba(100, 100, 100, 100)" },
-                    {range: [4,5], color: "rgba(100, 100, 100, 100)" },
-                    {range: [5,6], color: "rgba(100, 100, 100, 100)" },
-                    {range: [6,7], color: "rgba(100, 100, 100, 100)" },
-                    {range: [7,8], color: "rgba(100, 100, 100, 100)" },
-                    {range: [8,9], color: "rgba(100, 100, 100, 100)" },
+                    {range: [0,1], color: "rgba(232, 226, 202, .5)" },
+                    {range: [1,2], color: "rgba(210, 206, 202, .5)" },
+                    {range: [2,3], color: "rgba(202, 209, 95, .5)" },
+                    {range: [3,4], color: "rgba(170, 202, 42, .5)" },
+                    {range: [4,5], color: "rgba(110, 154, 22, .5)" },
+                    {range: [5,6], color: "rgba(14, 127, 0, .5)" },
+                    {range: [6,7], color: "rgba(10, 120, 22, .5)" },
+                    {range: [7,8], color: "rgba(0, 105, 11, .5)" },
+                    {range: [8,9], color: "rgba(0, 105, 11, .5)" },
                 ],
                 threshold: {
-                    //line: {color: "purple", width = 7},
+                    line: {color: "red"},
                     thickness: .75,
                     value: wfreq
                 }
             }
     }
     ]
-    var layout = {}
+    var layout = {
+        
+    }
     Plotly.newPlot("gauge", data, layout)
 };
 function optionChanged(id) {
